@@ -31,12 +31,12 @@ public class Main {
 
           personDetailList =  br.lines().map(str ->{
                 String[] arr = str.split(",");
-
                 PersonDetail personDetail = new PersonDetail(arr[0],arr[1].trim(), LocalDate.parse(arr[2].trim(),formatter));
-
                 return personDetail;
             }).collect(Collectors.toList());
+
            br.close();
+
         } catch ( IOException e) {
             e.printStackTrace();
 
@@ -47,19 +47,14 @@ public class Main {
 
 
     Optional<PersonDetail> maxAgePerson =  personDetailList.stream().min(Comparator.comparing(PersonDetail::getDateOfBirth));
-
-
-
-        System.out.println("Oldest person is  " + maxAgePerson.get().getName() );
+    System.out.println("Oldest person is  " + maxAgePerson.get().getName() );
 
 
 
     Optional<PersonDetail> bill =   personDetailList.stream().filter(personDetail -> personDetail.getName().equals("Bill McKnight")).findAny();
-    Optional<PersonDetail> paul =   personDetailList.stream().filter(personDetail -> personDetail.getName().equals("Paul Robinson")).findAny();
-
     LocalDate billDateOfBirth = bill.get().getDateOfBirth();
+    Optional<PersonDetail> paul =   personDetailList.stream().filter(personDetail -> personDetail.getName().equals("Paul Robinson")).findAny();
     LocalDate paulDateOfBirth = paul.get().getDateOfBirth();
-
     System.out.println(" Date difference between Paul and Bill is " + DAYS.between(billDateOfBirth,paulDateOfBirth));
 
 
